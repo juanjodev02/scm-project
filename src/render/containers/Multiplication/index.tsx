@@ -1,17 +1,19 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import ContainerHeader from "../../components/ContainerHeader";
 import {InputNumber} from "antd";
+import useCalcOperation from "../../hooks/useCalcOperation";
+import Controller from './controller';
 
 const Multiplication: FC = () => {
-    const [multiplication, setMultiplication] = useState<number>(0);
+    const {response, setValue} = useCalcOperation<Controller>(new Controller());
 
     return (
         <div>
             <ContainerHeader title='Multiplicación' />
-            <InputNumber size="large" min={1} max={100000} defaultValue={0} onChange={() => console.log('change')} />
+            <InputNumber size="large" onChange={(e) => setValue(e, 'a')}/>
             <span style={{fontSize: 25}}> x </span>
-            <InputNumber size="large" min={1} max={100000} defaultValue={0} onChange={() => console.log('change')} />
-            <span style={{fontSize: 25}}> = {multiplication}</span>
+            <InputNumber size="large" onChange={(e) => setValue(e, 'b')} />
+            <span style={{fontSize: 25}}> = {response}</span>
         </div>
     );
 };
